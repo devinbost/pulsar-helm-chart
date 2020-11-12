@@ -61,15 +61,16 @@ data:
   {{- end }}
   # Authentication Settings
   {{- if .Values.auth.authentication.enabled }}
-  {{- if contains "tls" .Values.auth.authentication.provider }}
-  authParams: "tlsCertFile:/pulsar/certs/toolset/tls.crt,tlsKeyFile:/pulsar/certs/toolset/tls.key"
-  authPlugin: "org.apache.pulsar.client.impl.auth.AuthenticationTls"
-  {{- end }} 
-  {{- if eq "jwt" .Values.auth.authentication.provider  }}
+    {{- if contains "jwt" .Values.auth.authentication.provider  }}
   # If JWT is included in auth options, default to JWT for simplicity.
   authParams: "file:///pulsar/tokens/client/token"
   authPlugin: "org.apache.pulsar.client.impl.auth.AuthenticationToken"
   {{- end }} 
+  {{- if eq "tls" .Values.auth.authentication.provider }}
+  authParams: "tlsCertFile:/pulsar/certs/toolset/tls.crt,tlsKeyFile:/pulsar/certs/toolset/tls.key"
+  authPlugin: "org.apache.pulsar.client.impl.auth.AuthenticationTls"
+  {{- end }} 
+
   
   {{- end }} 
 {{ toYaml .Values.toolset.configData | indent 2 }}

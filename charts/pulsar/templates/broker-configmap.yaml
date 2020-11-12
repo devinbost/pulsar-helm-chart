@@ -114,9 +114,9 @@ data:
   {{- end }}
   {{- if and (contains "jwt" .Values.auth.authentication.provider) (contains "tls" .Values.auth.authentication.provider) }}
   authenticationProviders: org.apache.pulsar.broker.authentication.AuthenticationProviderToken,org.apache.pulsar.broker.authentication.AuthenticationProviderTls
-  # If TLS is supported, just use TLS auth between brokers
-  brokerClientAuthenticationParameters: "tlsCertFile:/pulsar/certs/broker/tls.crt,tlsKeyFile:/pulsar/certs/broker/tls.key"
-  brokerClientAuthenticationPlugin: org.apache.pulsar.client.impl.auth.AuthenticationTls
+  # If JWT is supported, just use JWT auth between brokers
+  brokerClientAuthenticationParameters: "file:///pulsar/tokens/broker/token"
+  brokerClientAuthenticationPlugin: "org.apache.pulsar.client.impl.auth.AuthenticationToken"
   brokerClientTrustCertsFilePath: "/pulsar/certs/ca/ca.cert"
   {{- if .Values.auth.authentication.jwt.usingSecretKey }}
   tokenSecretKey: "file:///pulsar/keys/token/secret.key"
