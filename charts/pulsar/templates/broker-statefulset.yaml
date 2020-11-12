@@ -215,7 +215,7 @@ spec:
             name: "{{ template "pulsar.fullname" . }}-{{ .Values.broker.component }}"
         volumeMounts:
           {{- if .Values.auth.authentication.enabled }}
-          {{- if eq .Values.auth.authentication.provider "jwt" }}
+          {{- if contains "jwt" .Values.auth.authentication.provider }}
           - mountPath: "/pulsar/keys"
             name: token-keys
             readOnly: true
@@ -227,7 +227,7 @@ spec:
           {{- include "pulsar.broker.certs.volumeMounts" . | nindent 10 }}
       volumes:
       {{- if .Values.auth.authentication.enabled }}
-      {{- if eq .Values.auth.authentication.provider "jwt" }}
+      {{- if contains "jwt" .Values.auth.authentication.provider }}
       - name: token-keys
         secret:
           {{- if not .Values.auth.authentication.jwt.usingSecretKey }}
