@@ -110,7 +110,7 @@ data:
   authenticationEnabled: "true"
   {{- if .Values.auth.authorization.enabled }}
   authorizationEnabled: "true"
-  superUserRoles: {{ .Values.auth.superUsers.broker }},{{ .Values.auth.superUsers.proxy }},{{ .Values.auth.superUsers.client }}
+  superUserRoles: {{ .Values.auth.superUsers.broker }},{{ .Values.auth.superUsers.proxy }},{{ .Values.auth.superUsers.client }},admin
   {{- end }}
   {{- if and (contains "jwt" .Values.auth.authentication.provider) (contains "tls" .Values.auth.authentication.provider) }}
   authenticationProviders: org.apache.pulsar.broker.authentication.AuthenticationProviderToken,org.apache.pulsar.broker.authentication.AuthenticationProviderTls
@@ -118,6 +118,9 @@ data:
   brokerClientAuthenticationParameters: "tlsCertFile:/pulsar/certs/broker/tls.crt,tlsKeyFile:/pulsar/certs/broker/tls.key"
   brokerClientAuthenticationPlugin: org.apache.pulsar.client.impl.auth.AuthenticationTls
   brokerClientTrustCertsFilePath: "/pulsar/certs/ca/ca.cert"
+  PULSAR_PREFIX_brokerClientAuthenticationParameters: "tlsCertFile:/pulsar/certs/broker/tls.crt,tlsKeyFile:/pulsar/certs/broker/tls.key"
+  PULSAR_PREFIX_brokerClientAuthenticationPlugin: org.apache.pulsar.client.impl.auth.AuthenticationTls
+  PULSAR_PREFIX_brokerClientTrustCertsFilePath: "/pulsar/certs/ca/ca.cert"
   {{- if .Values.auth.authentication.jwt.usingSecretKey }}
   tokenSecretKey: "file:///pulsar/keys/token/secret.key"
   {{- else }}
@@ -126,8 +129,12 @@ data:
   {{- end }}
   {{- if eq .Values.auth.authentication.provider "tls" }}
   authenticationProviders: "org.apache.pulsar.broker.authentication.AuthenticationProviderTls"
-  brokerClientAuthenticationParameters: "tlsCertFile:/pulsar/certs/broker/tls.crt,tlsKeyFile:/pulsar/keys/broker/tls.key"
+  brokerClientAuthenticationParameters: "tlsCertFile:/pulsar/certs/broker/tls.crt,tlsKeyFile:/pulsar/certs/broker/tls.key"
   brokerClientAuthenticationPlugin: "org.apache.pulsar.client.impl.auth.AuthenticationTls"
+  brokerClientTrustCertsFilePath: "/pulsar/certs/ca/ca.cert"
+  PULSAR_PREFIX_brokerClientAuthenticationParameters: "tlsCertFile:/pulsar/certs/broker/tls.crt,tlsKeyFile:/pulsar/certs/broker/tls.key"
+  PULSAR_PREFIX_brokerClientAuthenticationPlugin: org.apache.pulsar.client.impl.auth.AuthenticationTls
+  PULSAR_PREFIX_brokerClientTrustCertsFilePath: "/pulsar/certs/ca/ca.cert"
   {{- end }}
   {{- if eq .Values.auth.authentication.provider "jwt" }}
   # token authentication configuration
