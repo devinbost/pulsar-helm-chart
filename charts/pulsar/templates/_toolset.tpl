@@ -56,7 +56,7 @@ Define toolset tls certs volumes
       path: tls.crt
     - key: tls.key
       path: tls.key
-- name: toolset-certs
+- name: toolset-client-certs
   secret:
     secretName: "{{ .Release.Name }}-client-{{ .Values.tls.toolset.cert_name }}"
     items:
