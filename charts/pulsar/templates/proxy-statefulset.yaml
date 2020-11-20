@@ -205,6 +205,9 @@ spec:
           - mountPath: "/pulsar/certs/proxy"
             name: proxy-certs
             readOnly: true
+          - mountPath: "/pulsar/certs/client/proxy"
+            name: proxy-client-certs
+            readOnly: true
           {{- end}}
           {{- if .Values.tls.enabled }}
           - mountPath: "/pulsar/certs/ca"
@@ -250,6 +253,14 @@ spec:
         - name: proxy-certs
           secret:
             secretName: "{{ .Release.Name }}-{{ .Values.tls.proxy.cert_name }}"
+            items:
+              - key: tls.crt
+                path: tls.crt
+              - key: tls.key
+                path: tls.key
+        - name: proxy-certs
+          secret:
+            secretName: "{{ .Release.Name }}-client-{{ .Values.tls.proxy.cert_name }}"
             items:
               - key: tls.crt
                 path: tls.crt

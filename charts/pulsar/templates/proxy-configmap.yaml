@@ -70,7 +70,7 @@ data:
   {{- if and (contains "jwt" .Values.auth.authentication.provider) (contains "tls" .Values.auth.authentication.provider) }}
   authenticationProviders: org.apache.pulsar.broker.authentication.AuthenticationProviderToken,org.apache.pulsar.broker.authentication.AuthenticationProviderTls
   # If TLS is supported, just use TLS between brokers:
-  brokerClientAuthenticationParameters: "tlsCertFile:/pulsar/certs/proxy/tls.crt,tlsKeyFile:/pulsar/certs/proxy/tls.key" 
+  brokerClientAuthenticationParameters: "tlsCertFile:/pulsar/certs/client/proxy/tls.crt,tlsKeyFile:/pulsar/certs/client/proxy/tls.key" 
   brokerClientAuthenticationPlugin: org.apache.pulsar.client.impl.auth.AuthenticationTls
   {{- if .Values.auth.authentication.jwt.usingSecretKey }}
   tokenSecretKey: "file:///pulsar/keys/token/secret.key"
@@ -80,7 +80,7 @@ data:
   {{- end }}
   {{- if eq .Values.auth.authentication.provider "tls" }}
   authenticationProviders: "org.apache.pulsar.broker.authentication.AuthenticationProviderTls"
-  brokerClientAuthenticationParameters: "tlsCertFile:/pulsar/certs/proxy/tls.crt,tlsKeyFile:/pulsar/certs/proxy/tls.key" 
+  brokerClientAuthenticationParameters: "tlsCertFile:/pulsar/certs/client/proxy/tls.crt,tlsKeyFile:/pulsar/certs/client/proxy/tls.key" 
   brokerClientAuthenticationPlugin: "org.apache.pulsar.client.impl.auth.AuthenticationTls"
   {{- end }}
   {{- if eq .Values.auth.authentication.provider "jwt" }}

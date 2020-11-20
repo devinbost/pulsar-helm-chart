@@ -29,6 +29,9 @@ Define autorecovery tls certs mounts
 - name: autorecovery-certs
   mountPath: "/pulsar/certs/autorecovery"
   readOnly: true
+- name: autorecovery-client-certs
+  mountPath: "/pulsar/certs/autorecovery/client"
+  readOnly: true
 - name: ca
   mountPath: "/pulsar/certs/ca"
   readOnly: true
@@ -48,6 +51,14 @@ Define autorecovery tls certs volumes
 - name: autorecovery-certs
   secret:
     secretName: "{{ .Release.Name }}-{{ .Values.tls.autorecovery.cert_name }}"
+    items:
+    - key: tls.crt
+      path: tls.crt
+    - key: tls.key
+      path: tls.key
+- name: autorecovery-client-certs
+  secret:
+    secretName: "{{ .Release.Name }}-client-{{ .Values.tls.autorecovery.cert_name }}"
     items:
     - key: tls.crt
       path: tls.crt

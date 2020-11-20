@@ -30,6 +30,9 @@ Define bookie tls certs mounts
 - name: bookie-certs
   mountPath: "/pulsar/certs/bookie"
   readOnly: true
+- name: bookie-client-certs
+  mountPath: "/pulsar/certs/client/bookie"
+  readOnly: true
 - name: ca
   mountPath: "/pulsar/certs/ca"
   readOnly: true
@@ -49,6 +52,14 @@ Define bookie tls certs volumes
 - name: bookie-certs
   secret:
     secretName: "{{ .Release.Name }}-{{ .Values.tls.bookie.cert_name }}"
+    items:
+    - key: tls.crt
+      path: tls.crt
+    - key: tls.key
+      path: tls.key
+- name: bookie-client-certs
+  secret:
+    secretName: "{{ .Release.Name }}-client-{{ .Values.tls.bookie.cert_name }}"
     items:
     - key: tls.crt
       path: tls.crt

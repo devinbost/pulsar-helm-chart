@@ -166,6 +166,9 @@ spec:
         - mountPath: "/pulsar/certs/zookeeper"
           name: zookeeper-certs
           readOnly: true
+        - mountPath: "/pulsar/certs/client/zookeeper"
+          name: zookeeper-client-certs
+          readOnly: true
         - mountPath: "/pulsar/certs/ca"
           name: ca
           readOnly: true
@@ -182,6 +185,14 @@ spec:
       - name: zookeeper-certs
         secret:
           secretName: "{{ .Release.Name }}-{{ .Values.tls.zookeeper.cert_name }}"
+          items:
+            - key: tls.crt
+              path: tls.crt
+            - key: tls.key
+              path: tls.key
+      - name: zookeeper-client-certs
+        secret:
+          secretName: "{{ .Release.Name }}-client-{{ .Values.tls.zookeeper.cert_name }}"
           items:
             - key: tls.crt
               path: tls.crt

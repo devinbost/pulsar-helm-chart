@@ -29,6 +29,9 @@ Define toolset tls certs mounts
 - name: toolset-certs
   mountPath: "/pulsar/certs/toolset"
   readOnly: true
+- name: toolset-client-certs
+  mountPath: "/pulsar/certs/client/toolset"
+  readOnly: true
 - name: ca
   mountPath: "/pulsar/certs/ca"
   readOnly: true
@@ -48,6 +51,14 @@ Define toolset tls certs volumes
 - name: toolset-certs
   secret:
     secretName: "{{ .Release.Name }}-{{ .Values.tls.toolset.cert_name }}"
+    items:
+    - key: tls.crt
+      path: tls.crt
+    - key: tls.key
+      path: tls.key
+- name: toolset-certs
+  secret:
+    secretName: "{{ .Release.Name }}-client-{{ .Values.tls.toolset.cert_name }}"
     items:
     - key: tls.crt
       path: tls.crt
