@@ -33,9 +33,6 @@ Define broker tls certs mounts
 */}}
 {{- define "pulsar.broker.certs.volumeMounts" -}}
 {{- if and .Values.tls.enabled (or .Values.tls.broker.enabled (or .Values.tls.bookie.enabled .Values.tls.zookeeper.enabled)) }}
-- name: broker-certs
-  mountPath: "/pulsar/certs/broker"
-  readOnly: true
 - name: broker-client-certs
   mountPath: "/pulsar/certs/client/broker"
   readOnly: true

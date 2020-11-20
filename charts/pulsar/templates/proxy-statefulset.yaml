@@ -202,9 +202,6 @@ spec:
           {{- end }}
           {{- end }}
           {{- if .Values.tls.proxy.enabled }}
-          - mountPath: "/pulsar/certs/proxy"
-            name: proxy-certs
-            readOnly: true
           - mountPath: "/pulsar/certs/client/proxy"
             name: proxy-client-certs
             readOnly: true

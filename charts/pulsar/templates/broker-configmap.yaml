@@ -100,8 +100,8 @@ data:
   brokerServicePortTls: "{{ .Values.broker.ports.pulsarssl }}"
   webServicePortTls: "{{ .Values.broker.ports.https }}"
   # TLS Settings
-  tlsCertificateFilePath: "/pulsar/certs/broker/tls.crt"
-  tlsKeyFilePath: "/pulsar/certs/broker/tls.key"
+  tlsCertificateFilePath: "/pulsar/certs/client/broker/tls.crt"
+  tlsKeyFilePath: "/pulsar/certs/client/broker/tls.key"
   tlsTrustCertsFilePath: "/pulsar/certs/ca/ca.crt"
   {{- end }}
 
@@ -111,9 +111,10 @@ data:
   {{- if .Values.auth.authorization.enabled }}
   authorizationEnabled: "true"
   proxyRoles: {{ .Values.auth.superUsers.proxy }}
-  superUserRoles: {{ .Values.auth.superUsers.broker }},{{ .Values.auth.superUsers.proxy }},{{ .Values.auth.superUsers.client }},zookeeper-admin,bookie-admin,bookkeeper-admin,toolset-admin,autorecovery-admin
+  superUserRoles: {{ .Values.auth.superUsers.broker }},{{ .Values.auth.superUsers.proxy }},{{ .Values.auth.superUsers.client }},zookeeper-admin,bookie-admin,bookkeeper-admin,toolset-admin,autorecovery-admin,pulsar.svc.cluster.local,cert-manager
   {{- end }}
   {{- if and (contains "jwt" .Values.auth.authentication.provider) (contains "tls" .Values.auth.authentication.provider) }}
+  tlsEnableHostnameVerification: "false"
   authenticationProviders: org.apache.pulsar.broker.authentication.AuthenticationProviderToken,org.apache.pulsar.broker.authentication.AuthenticationProviderTls
   # If TLS is supported, just use TLS auth between brokers
   brokerClientAuthenticationParameters: "tlsCertFile:/pulsar/certs/client/broker/tls.crt,tlsKeyFile:/pulsar/certs/client/broker/tls.key"
@@ -126,6 +127,7 @@ data:
   {{- end }}
   {{- end }}
   {{- if eq .Values.auth.authentication.provider "tls" }}
+  tlsEnableHostnameVerification: "false"
   useTls: "true"
   authenticationProviders: "org.apache.pulsar.broker.authentication.AuthenticationProviderTls"
   brokerClientAuthenticationParameters: "tlsCertFile:/pulsar/certs/client/broker/tls.crt,tlsKeyFile:/pulsar/certs/client/broker/tls.key"
@@ -149,14 +151,14 @@ data:
   # bookkeeper tls settings
   bookkeeperTLSClientAuthentication: "true"
   bookkeeperTLSKeyFileType: "PEM"
-  bookkeeperTLSKeyFilePath: "/pulsar/certs/broker/tls.key"
-  bookkeeperTLSCertificateFilePath: "/pulsar/certs/broker/tls.crt"
+  bookkeeperTLSKeyFilePath: "/pulsar/certs/client/broker/tls.key"
+  bookkeeperTLSCertificateFilePath: "/pulsar/certs/client/broker/tls.crt"
   bookkeeperTLSTrustCertsFilePath: "/pulsar/certs/ca/ca.crt"
   bookkeeperTLSTrustCertTypes: "PEM"
   PULSAR_PREFIX_bookkeeperTLSClientAuthentication: "true"
   PULSAR_PREFIX_bookkeeperTLSKeyFileType: "PEM"
-  PULSAR_PREFIX_bookkeeperTLSKeyFilePath: "/pulsar/certs/broker/tls.key"
-  PULSAR_PREFIX_bookkeeperTLSCertificateFilePath: "/pulsar/certs/broker/tls.crt"
+  PULSAR_PREFIX_bookkeeperTLSKeyFilePath: "/pulsar/certs/client/broker/tls.key"
+  PULSAR_PREFIX_bookkeeperTLSCertificateFilePath: "/pulsar/certs/client/broker/tls.crt"
   PULSAR_PREFIX_bookkeeperTLSTrustCertsFilePath: "/pulsar/certs/ca/ca.crt"
   PULSAR_PREFIX_bookkeeperTLSTrustCertTypes: "PEM"
   # https://github.com/apache/bookkeeper/pull/2300

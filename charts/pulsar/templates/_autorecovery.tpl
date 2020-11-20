@@ -26,11 +26,8 @@ Define autorecovery tls certs mounts
 */}}
 {{- define "pulsar.autorecovery.certs.volumeMounts" -}}
 {{- if and .Values.tls.enabled .Values.tls.zookeeper.enabled }}
-- name: autorecovery-certs
-  mountPath: "/pulsar/certs/autorecovery"
-  readOnly: true
 - name: autorecovery-client-certs
-  mountPath: "/pulsar/certs/autorecovery/client"
+  mountPath: "/pulsar/certs/client/autorecovery"
   readOnly: true
 - name: ca
   mountPath: "/pulsar/certs/ca"

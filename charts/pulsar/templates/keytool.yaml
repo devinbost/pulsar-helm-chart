@@ -33,8 +33,8 @@ data:
     component=$1
     name=$2
     isClient=$3
-    crtFile=/pulsar/certs/${component}/tls.crt
-    keyFile=/pulsar/certs/${component}/tls.key
+    crtFile=/pulsar/certs/client/${component}/tls.crt
+    keyFile=/pulsar/certs/client/${component}/tls.key
     caFile=/pulsar/certs/ca/ca.crt
     p12File=/pulsar/${component}.p12
     keyStoreFile=/pulsar/${component}.keystore.jks

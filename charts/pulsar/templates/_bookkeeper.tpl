@@ -27,9 +27,6 @@ Define bookie tls certs mounts
 */}}
 {{- define "pulsar.bookkeeper.certs.volumeMounts" -}}
 {{- if and .Values.tls.enabled (or .Values.tls.bookie.enabled .Values.tls.zookeeper.enabled) }}
-- name: bookie-certs
-  mountPath: "/pulsar/certs/bookie"
-  readOnly: true
 - name: bookie-client-certs
   mountPath: "/pulsar/certs/client/bookie"
   readOnly: true
@@ -101,9 +98,9 @@ Define bookie tls config
 {{- define "pulsar.bookkeeper.config.tls" -}}
 {{- if and .Values.tls.enabled .Values.tls.bookie.enabled }}
 PULSAR_PREFIX_tlsProviderFactoryClass: org.apache.bookkeeper.tls.TLSContextFactory
-PULSAR_PREFIX_tlsCertificatePath: /pulsar/certs/bookie/tls.crt  
+PULSAR_PREFIX_tlsCertificatePath: /pulsar/certs/client/bookie/tls.crt  
 PULSAR_PREFIX_tlsKeyStoreType: PEM
-PULSAR_PREFIX_tlsKeyStore: /pulsar/certs/bookie/tls.key
+PULSAR_PREFIX_tlsKeyStore: /pulsar/certs/client/bookie/tls.key
 PULSAR_PREFIX_tlsTrustStoreType: PEM
 PULSAR_PREFIX_tlsTrustStore: /pulsar/certs/ca/ca.crt 
 {{- end }}

@@ -26,9 +26,6 @@ Define toolset tls certs mounts
 */}}
 {{- define "pulsar.toolset.certs.volumeMounts" -}}
 {{- if and .Values.tls.enabled .Values.tls.zookeeper.enabled }}
-- name: toolset-certs
-  mountPath: "/pulsar/certs/toolset"
-  readOnly: true
 - name: toolset-client-certs
   mountPath: "/pulsar/certs/client/toolset"
   readOnly: true

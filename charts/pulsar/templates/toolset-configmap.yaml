@@ -62,7 +62,7 @@ data:
   # Authentication Settings
   {{- if .Values.auth.authentication.enabled }}
   {{- if contains "tls" .Values.auth.authentication.provider }}
-  authParams: "tlsCertFile:/pulsar/certs/toolset/tls.crt,tlsKeyFile:/pulsar/certs/toolset/tls.key"
+  authParams: "tlsCertFile:/pulsar/certs/client/toolset/tls.crt,tlsKeyFile:/pulsar/certs/client/toolset/tls.key"
   authPlugin: "org.apache.pulsar.client.impl.auth.AuthenticationTls"
   {{- end }} 
   {{- if eq "jwt" .Values.auth.authentication.provider  }}
